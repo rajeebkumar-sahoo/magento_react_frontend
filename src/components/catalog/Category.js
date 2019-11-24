@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { CardDeck, Card, ListGroup, Button } from 'react-bootstrap'
-import Product from './Product';
 
 class Category extends Component {
 

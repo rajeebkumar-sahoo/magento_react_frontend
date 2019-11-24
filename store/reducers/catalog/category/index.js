@@ -1,11 +1,15 @@
 import { 
     GET_CATEGORIES, 
     GET_CATEGORY_PRODUCTS,
-    LAYERED_NAVIGATION
+    LAYERED_NAVIGATION,
+    CURRENT_CATGORY,
+    CATALOG_PAGE_TITLE
 } from '../../../actions/types'
 
 const initialState = {
     categories: [],
+    currentCategory: {},
+    catalogPageTitle: "",
     categoryProducts: [],
     layeredNavigation: {}
 }
@@ -16,6 +20,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 categories: action.payload
+            }
+        case CURRENT_CATGORY:
+            return {
+                ...state,
+                currentCategory: action.payload
+            }
+        case CATALOG_PAGE_TITLE:
+            return {
+                ...state,
+                catalogPageTitle: action.payload
             }
         case GET_CATEGORY_PRODUCTS:
             return {

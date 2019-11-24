@@ -6,8 +6,9 @@ import gql from 'graphql-tag'
 import { 
     GET_CATEGORIES, 
     GET_CATEGORY_PRODUCTS,
-    GET_CATEGORY_PRODUCT_COLLECTION,
-    LAYERED_NAVIGATION
+    LAYERED_NAVIGATION,
+    CURRENT_CATGORY,
+    CATALOG_PAGE_TITLE
 } from '../../types';
 
 const headers = {
@@ -34,12 +35,24 @@ export const getRootCategories = () => dispatch => {
                     name,
                     include_in_menu,
                     is_anchor,
+                    breadcrumbs{
+                        category_id,
+                        category_name,
+                        category_level,
+                        category_url_key
+                    },
                     children_count,
                     children{
                         id,
                         name,
                         include_in_menu,
                         is_anchor,
+                        breadcrumbs{
+                            category_id,
+                            category_name,
+                            category_level,
+                            category_url_key
+                        },
                         children_count
                     }
                 }
@@ -54,6 +67,18 @@ export const getRootCategories = () => dispatch => {
             payload: res.data.category.children
         })
     }).catch(err => console.log(err))
+}
+
+export const setCurrentCategory = (category) => dispatch => {
+    dispatch({
+        type: CURRENT_CATGORY,
+        payload: category
+    })
+
+    dispatch({
+        type: CATALOG_PAGE_TITLE,
+        payload: category.name
+    })
 }
 
 export const getCategoryProducts = (categoryId) => dispatch => {
@@ -98,12 +123,3 @@ export const getCategoryProducts = (categoryId) => dispatch => {
     }).catch(err => console.log(err))
 }
 
-export const getProductBySku = (sku) => dispatch => {
-    axios.get(`/rest/V1/products/${sku}`, headers)
-    .then(res => {
-        dispatch({
-            type: GET_CATEGORY_PRODUCT_COLLECTION,
-            payload: res.data
-        })
-    }).catch(err => console.log(err))
-}

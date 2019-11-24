@@ -1,20 +1,23 @@
 import React, { Component, Fragment } from 'react'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { getCategoryProducts } from '../../../store/actions/catalog/category'
-// import CategoryTree from './CategoryTree';
+import { 
+    getCategoryProducts,
+    setCurrentCategory
+} from '../../../store/actions/catalog/category'
 
 class CategoryMenu extends Component {
 
-    loadCategory = (categoryId) => {
-        console.log('load category called..')
-        this.props.getCategoryProducts(categoryId)
+    loadCategory = (category) => {
+        this.props.getCategoryProducts(category.id)
+        this.props.setCurrentCategory(category)
     }
 
     getNavLink = (category) => {
         if(category.include_in_menu) {
             return (
-                <Nav.Link key={category.id} href="#" onClick={() => (this.loadCategory(category.id))}>
+                <Nav.Link key={category.id} href="#" 
+                    onClick={() => (this.loadCategory(category))}>
                     {category.name}
                 </Nav.Link>
             )
@@ -43,7 +46,6 @@ class CategoryMenu extends Component {
     }
 
     render() {
-        console.log(this.props.categories)
         return (
             <Fragment>
                 { this.loopOverCategoryTree(this.props.categories) }
@@ -56,5 +58,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-    getCategoryProducts
+    getCategoryProducts,
+    setCurrentCategory
 })(CategoryMenu)
