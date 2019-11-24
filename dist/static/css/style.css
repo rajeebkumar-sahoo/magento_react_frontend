@@ -1,0 +1,12 @@
+body {
+    background-color: #ccc;
+}
+
+nav {
+    background-color: #00bcd4;
+}
+
+footer {
+    min-height: 200px;
+    background-color: #00bcd4;
+}
